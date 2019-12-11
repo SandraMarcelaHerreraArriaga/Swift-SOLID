@@ -9,11 +9,52 @@ import UIKit
 5.- Dependency inversion principle
 */
 
-///class AirConditionerOld violating the Single responsability because a class should have only a single responsability
-///Coupled responsabilities lead to fragility in your classes. Each function represent one responsability
-class AirConditionedOld{
-    func turnOn(){}
-    func turnOff(){}
-    func changeMode(){}
-    func changeFanSpeed(){}
+///Decoupling airConditioner's responsaibilites into three separate interfaces.
+protocol SwitchOption{
+    func turnOn()
+    func turnOff()
+}
+protocol ModeOption{
+    func changeMode()
+}
+protocol FanSpeedOption{
+    func controlWindSpeed()
+}
+///One solution is to maintain this separation of concern for the AirConditionerOld class to delegate the swithOption, ModeOption and FanSpeedOption
+class Switch : SwitchOption{
+    func turnOn(){
+        print("Turn on")
+    }
+    func turnOff() {
+        print("Turn off")
+    }
+}
+class Mode: ModeOption{
+    func changeMode() {
+        print("Mode changed")
+    }
+}
+class FanSpeed : FanSpeedOption{
+    func controlWindSpeed() {
+        print("Fan Speed changed")
+    }
+}
+
+class AirConditionedNew: SwitchOption, ModeOption, FanSpeedOption{
+    let modeController = Mode()
+    let fanspeedController = FanSpeed()
+    let switchController = Switch()
+    
+    func turnOn() {
+        switchController.turnOn()
+    }
+    func turnOff() {
+        switchController.turnOff()
+    }
+    func changeMode() {
+        modeController.changeMode()
+    }
+    func controlWindSpeed() {
+        fanspeedController.controlWindSpeed()
+    }
 }
