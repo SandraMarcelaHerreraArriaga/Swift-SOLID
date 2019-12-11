@@ -75,3 +75,59 @@ extension AirConditionedNew:Humidable{
 }
 let acNew = AirConditionedNew()
 acNew.changeHumidity(10)
+
+protocol Cost{
+    func price() -> Int
+}
+
+protocol ACFeature: SwitchOption, ModeOption, FanSpeedOption, Cost{
+    
+}
+
+class FullPriceAirConditioner: ACFeature{
+    let modeController = Mode()
+    let fanspeedController = FanSpeed()
+    let switchController = Switch()
+    func price() -> Int {
+        print("FullPriceAirConditioner price = 1000")
+        return 1000
+    }
+    func turnOn() {
+           switchController.turnOn()
+       }
+       func turnOff() {
+           switchController.turnOff()
+       }
+       func changeMode() {
+           modeController.changeMode()
+       }
+       func controlWindSpeed() {
+           fanspeedController.controlWindSpeed()
+       }
+}
+
+class DiscountedAirConditioner: ACFeature{
+    let acProduct : FullPriceAirConditioner
+    init(_ ac: FullPriceAirConditioner) {
+        self.acProduct=ac
+    }
+    func turnOn() {
+        acProduct.turnOn()
+    }
+    func turnOff() {
+        acProduct.turnOff()
+    }
+    func changeMode() {
+        acProduct.changeMode()
+    }
+    func controlWindSpeed() {
+        acProduct.controlWindSpeed()
+    }
+    func price() -> Int {
+        print("DiscountedAirConditioner price \(Int(Float(acProduct.price()) * 0.75))")
+        return Int(Float(acProduct.price()) * 0.75)
+    }
+}
+let fullPriceProduct = FullPriceAirConditioner()
+let discountedProdct : ACFeature = DiscountedAirConditioner(fullPriceProduct)
+discountedProdct.price()
