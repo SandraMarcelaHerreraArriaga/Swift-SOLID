@@ -58,3 +58,20 @@ class AirConditionedNew: SwitchOption, ModeOption, FanSpeedOption{
         fanspeedController.controlWindSpeed()
     }
 }
+///new feature Humidity
+protocol Humidable{
+    func changeHumidity(_ value: Int)
+}
+class HumidityController: Humidable {
+    func changeHumidity(_ value: Int){
+        print("You have changed airhumidity to \(value)")
+    }
+}
+extension AirConditionedNew:Humidable{
+    func changeHumidity(_ value: Int){
+        let humidController = HumidityController()
+        humidController.changeHumidity(value)
+    }
+}
+let acNew = AirConditionedNew()
+acNew.changeHumidity(10)
