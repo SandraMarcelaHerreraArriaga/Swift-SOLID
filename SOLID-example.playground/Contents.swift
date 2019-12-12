@@ -137,21 +137,12 @@ discountedProdct.price()
 protocol NewACFeature: ACFeature{
     func getCentralizedAirConditionerCount() -> Int
 }
-class CentralizedAC: NewACFeature{
-    func getCentralizedAirConditionerCount() -> Int {return 100}
-    
-    func turnOn() {}
-    
-    func turnOff() {}
-    
-    func changeMode() {}
-    
-    func controlWindSpeed() {}
-    
-    func price() -> Int {return 10}
-    
-    //I can implement all function of full price air conditioner as well as getCentralizedAirConditionerCount
+class CentralizedFeature {
+  func getCentralizedAirConditionerCount()->Int
 }
-class SplitAC: NewACFeature{
-    //It does not have multiple ac's so implementing NewACFeauture  protocol violates interface seggregation principle 
+class CentralizedAC: ACFeature, CentralizedFeature{
+   //I can implement all function of full price air conditioner as well as getCentralizedAirConditionerCount feature
+}
+class SplitAC: ACFeature{
+    //It does not have multiple ac's so implementing newACFeature protocol violates interface seggregation principle
 }
