@@ -131,3 +131,27 @@ class DiscountedAirConditioner: ACFeature{
 let fullPriceProduct = FullPriceAirConditioner()
 let discountedProdct : ACFeature = DiscountedAirConditioner(fullPriceProduct)
 discountedProdct.price()
+
+
+///Interface seggregation principle
+protocol NewACFeature: ACFeature{
+    func getCentralizedAirConditionerCount() -> Int
+}
+class CentralizedAC: NewACFeature{
+    func getCentralizedAirConditionerCount() -> Int {return 100}
+    
+    func turnOn() {}
+    
+    func turnOff() {}
+    
+    func changeMode() {}
+    
+    func controlWindSpeed() {}
+    
+    func price() -> Int {return 10}
+    
+    //I can implement all function of full price air conditioner as well as getCentralizedAirConditionerCount
+}
+class SplitAC: NewACFeature{
+    //It does not have multiple ac's so implementing NewACFeauture  protocol violates interface seggregation principle 
+}
