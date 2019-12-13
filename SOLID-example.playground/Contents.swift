@@ -148,10 +148,19 @@ class SplitAC: ACFeature{
 }
 
 ///High levels modules should not depend on low level modules both should depend on Abstractions
+protocol Database{
+    func saveToDatabase(conversiations: [Any])
+}
+
 class ConversationDataController{
-    let database : CoreDataController
-    init(inDatabase: CoreDataController) {
+    let database : Database
+    init(inDatabase: Database) {
         database = inDatabase
+    }
+    func getAllConversations(){
+        let conversations = [Any]() //array of previous conversations
+        //array of previous conversations is download from API, parsed and created.
+        database.saveToDatabase(conversiations: conversations)
     }
 }
 class CoreDatacontroller{
