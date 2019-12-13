@@ -146,3 +146,16 @@ class CentralizedAC: ACFeature, CentralizedFeature{
 class SplitAC: ACFeature{
     //It does not have multiple ac's so implementing newACFeature protocol violates interface seggregation principle
 }
+
+///High levels modules should not depend on low level modules both should depend on Abstractions
+class ConversationDataController{
+    let database : CoreDataController
+    init(inDatabase: CoreDataController) {
+        database = inDatabase
+    }
+}
+class CoreDatacontroller{
+    func saveToDatabase(conversations: [Any]){
+        //save conversations to CoreDataController
+    }
+}
